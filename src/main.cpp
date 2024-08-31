@@ -24,14 +24,15 @@ void onRender();
 
 void drawGrid();
 
-float distanceTo(Vector2 a, Vector2 b);
+bool checkCollision(Vector2 a, Vector2 b);
+float distanceTo(Vector2 pos1, Vector2 pos2);
 
 std::vector<Entity> entities;
 
 int main(int argc, char* argv[])
 {
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE.c_str());
-    SetTargetFPS(10);
+    SetTargetFPS(5);
     srand(static_cast<unsigned>(time(0)));
     onStart();
 
@@ -151,4 +152,14 @@ void drawGrid()
 float distanceTo(Vector2 a, Vector2 b)
 {
     return sqrtf((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+}
+
+bool checkCollision(Vector2 pos1, Vector2 pos2) {
+    float x1 = pos1.x * GRID_SIZE;
+    float y1 = pos1.y * GRID_SIZE;
+    float x2 = pos2.x * GRID_SIZE;
+    float y2 = pos2.y * GRID_SIZE;
+
+    return (x1 < x2 + GRID_SIZE && x1 + GRID_SIZE > x2 &&
+            y1 < y2 + GRID_SIZE && y1 + GRID_SIZE > y2);
 }
